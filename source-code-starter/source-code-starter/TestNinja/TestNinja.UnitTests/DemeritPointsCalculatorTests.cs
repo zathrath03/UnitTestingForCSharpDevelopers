@@ -31,9 +31,9 @@ namespace TestNinja.UnitTests
         [Test]
         [TestCase(-1)]
         [TestCase(301)]
-        public void CalculateDemeritPoints_SpeedLessThan0OrGreaterThanMaxSpeed_ThrowArgumentOutOfRangeException(int speed)
+        public void CalculateDemeritPoints_SpeedIsOutOfRange_ThrowArgumentOutOfRangeException(int speed)
         {
-            Assert.That(() => _calculator.CalculateDemeritPoints((speed)), Throws.TypeOf<ArgumentOutOfRangeException>());
+            Assert.That(() => _calculator.CalculateDemeritPoints((speed)), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
         }
     }
 }
