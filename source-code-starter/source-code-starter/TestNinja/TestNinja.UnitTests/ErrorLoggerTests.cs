@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using TestNinja.Fundamentals;
 
@@ -17,7 +18,7 @@ namespace TestNinja.UnitTests
         [Test]
         public void Log_ErrorIsNotNull_SetTheLastErrorProperty()
         {
-            const string error = "New Error";
+            const string error = "Error";
             _logger.Log(error);
             
             Assert.That(_logger.LastError, Is.EqualTo(error));
@@ -30,6 +31,15 @@ namespace TestNinja.UnitTests
         public void Log_ArgumentIsNullOrWhiteSpace_ThrowArgumentNullException(string error)
         {
             Assert.That(() => _logger.Log(error), Throws.ArgumentNullException);
+        }
+
+        [Test]
+        public void Log_ValidError_RaiseErrorLoggedEvent()
+        {
+            var id = Guid.Empty;
+            _logger.ErrorLogged += (sender, args) => { id = args; };
+            _logger.Log("Error");
+            Assert.That(id, Is.Not.EqualTo(Guid.Empty));
         }
     }
 }
